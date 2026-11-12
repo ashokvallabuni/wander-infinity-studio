@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Official brand files live in `public/assets/brand/` and are referenced only through `src/lib/brand.ts` + `BrandLogo`; never regenerate or alter the logo artwork (the site uses `*-transparent.png` derivatives whose only change is a see-through black backdrop; the untouched upload stays alongside).
+- Shared header/footer are mounted in `src/routes/__root.tsx`; pages render only their own sections.
