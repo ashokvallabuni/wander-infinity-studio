@@ -42,6 +42,7 @@
   --color-violet: var(--violet);
   --color-amber: var(--amber);
   --color-emerald: var(--emerald);
+  --color-ember: var(--ember);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -354,6 +355,26 @@
   .marquee,
   .infinity-trace,
   .float-slow {
+    animation: none;
+  }
+}
+
+/* ---------- Page transition ---------- */
+.page-enter {
+  animation: page-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-enter {
     animation: none;
   }
 }

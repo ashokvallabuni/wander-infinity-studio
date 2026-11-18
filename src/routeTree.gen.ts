@@ -12,6 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ServicesIndexRouteImport } from './routes/services.index'
+import { Route as ServicesDivisionIndexRouteImport } from './routes/services.$division.index'
+import { Route as ServicesDivisionServiceRouteImport } from './routes/services.$division.$service'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +31,81 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesIndexRoute = ServicesIndexRouteImport.update({
+  id: '/services/',
+  path: '/services/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesDivisionIndexRoute = ServicesDivisionIndexRouteImport.update({
+  id: '/services/$division/',
+  path: '/services/$division/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesDivisionServiceRoute = ServicesDivisionServiceRouteImport.update({
+  id: '/services/$division/$service',
+  path: '/services/$division/$service',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/services/': typeof ServicesIndexRoute
+  '/services/$division/$service': typeof ServicesDivisionServiceRoute
+  '/services/$division/': typeof ServicesDivisionIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/services': typeof ServicesIndexRoute
+  '/services/$division/$service': typeof ServicesDivisionServiceRoute
+  '/services/$division': typeof ServicesDivisionIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/services/': typeof ServicesIndexRoute
+  '/services/$division/$service': typeof ServicesDivisionServiceRoute
+  '/services/$division/': typeof ServicesDivisionIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/contact'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/services/'
+    | '/services/$division/$service'
+    | '/services/$division/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact'
-  id: '__root__' | '/' | '/about' | '/contact'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/services'
+    | '/services/$division/$service'
+    | '/services/$division'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/services/'
+    | '/services/$division/$service'
+    | '/services/$division/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  ServicesIndexRoute: typeof ServicesIndexRoute
+  ServicesDivisionServiceRoute: typeof ServicesDivisionServiceRoute
+  ServicesDivisionIndexRoute: typeof ServicesDivisionIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +131,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/': {
+      id: '/services/'
+      path: '/services'
+      fullPath: '/services/'
+      preLoaderRoute: typeof ServicesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/$division/': {
+      id: '/services/$division/'
+      path: '/services/$division'
+      fullPath: '/services/$division/'
+      preLoaderRoute: typeof ServicesDivisionIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/$division/$service': {
+      id: '/services/$division/$service'
+      path: '/services/$division/$service'
+      fullPath: '/services/$division/$service'
+      preLoaderRoute: typeof ServicesDivisionServiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +159,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  ServicesIndexRoute: ServicesIndexRoute,
+  ServicesDivisionServiceRoute: ServicesDivisionServiceRoute,
+  ServicesDivisionIndexRoute: ServicesDivisionIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
